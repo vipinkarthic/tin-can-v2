@@ -42,7 +42,7 @@ void ntt_inverse(Poly& f) {
       }
     }
   }
-  
+  for (int j = 0; j < N; ++j) f[j] = mod_mul(f[j], 3303);
 }
 
 // alg 11, splits into 128 degree 1 products mod x squared minus gamma i
