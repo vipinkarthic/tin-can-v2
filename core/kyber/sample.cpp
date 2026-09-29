@@ -31,7 +31,7 @@ Poly sample_poly_cbd(int eta, ByteView bytes) {
     std::uint16_t x = 0, y = 0;
     for (int j = 0; j < eta; ++j) {
       x = static_cast<std::uint16_t>(x + bit(2 * i * eta + j));
-      
+      y = static_cast<std::uint16_t>(y + bit(2 * i * eta + eta + j));
     }
     // x minus y is between minus eta and eta, stored mod q
     f[i] = mod_sub(x, y);
