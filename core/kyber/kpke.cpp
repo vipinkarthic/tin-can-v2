@@ -16,7 +16,7 @@ PolyVec generate_matrix(const Params& p, ByteView rho) {
   PolyVec a(static_cast<std::size_t>(p.k * p.k));
   for (int i = 0; i < p.k; ++i)
     for (int j = 0; j < p.k; ++j)
-      a[static_cast<std::size_t>(i * p.k + j)] = sample_ntt(rho, static_cast<std::uint8_t>(i), static_cast<std::uint8_t>(j));
+      a[static_cast<std::size_t>(i * p.k + j)] = sample_ntt(rho, static_cast<std::uint8_t>(j), static_cast<std::uint8_t>(i));
   return a;
 }
 
