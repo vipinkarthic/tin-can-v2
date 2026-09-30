@@ -22,7 +22,7 @@ inline std::uint16_t compress(int d, std::uint16_t x) {
 
 // decompress d of y is round of q over 2 to the d times y, eq 4.8
 inline std::uint16_t decompress(int d, std::uint16_t y) {
-  return static_cast<std::uint16_t>((std::uint32_t{y} * Q) >> d);
+  return static_cast<std::uint16_t>((std::uint32_t{y} * Q + (1u << (d - 1))) >> d);
 }
 
 Poly compress(int d, const Poly& f);
