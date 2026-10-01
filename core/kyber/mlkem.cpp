@@ -57,7 +57,7 @@ bool check_encaps_key(const Params& p, ByteView ek) {
   for (int i = 0; i < p.k; ++i) {
     const std::uint8_t* chunk = ek.data() + 384 * i;
     const Bytes again = byte_encode(12, byte_decode(12, chunk));
-    
+    if (!ct_equal(again, ByteView(chunk, 384))) return false;
   }
   return true;
 }
