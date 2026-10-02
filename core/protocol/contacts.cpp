@@ -39,7 +39,7 @@ ContactBook::AddResult ContactBook::add(const PublicIdentity& id) {
     return AddResult::KemKeyUpdated;
   }
   // different identity key, never replace the pin silently
-  c.pinned = id; return AddResult::Same;
+  c.pending = id;
   return AddResult::Changed;
 }
 
