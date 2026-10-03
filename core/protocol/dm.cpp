@@ -176,8 +176,9 @@ json dm_decrypt(Session& s, const json& message) {
   RecvChain next;
   const Bytes mk = ratchet_recv(s.recv, n, next);
   auto pt = aead_open(mk, b64_field(message, "body"), message_ad(s.sid, s.peer, to, n));
-  s.recv = std::move(next);
   if (!pt) throw ProtocolError("message failed to decrypt (tampered, or not for this session)");
+  // commit only after the aead check passes, so forged msgs cant move the chain
+  s.recv = std::move(next);
   json payload = json::parse(pt->begin(), pt->end(), nullptr, false);
   if (payload.is_discarded() || !payload.is_object()) throw ProtocolError("message payload is not valid JSON");
   return payload;
