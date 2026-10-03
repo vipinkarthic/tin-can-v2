@@ -157,7 +157,7 @@ std::pair<Vault, json> Vault::open(const fs::path& dir, const std::string& user,
   v.key_ = argon2id(passphrase, from_base64(v.kdf_.at("salt").get<std::string>()), {ops, static_cast<std::size_t>(mem)});
 
   auto plain = aead_open(v.key_, from_base64(file.at("box").get<std::string>()), v.ad_);
-  if (!plain) return {std::move(v), json::object()};
+  if (!plain) throw VaultError("wrong passphrase (or the vault was modified)");
   json state = json::parse(plain->begin(), plain->end(), nullptr, false);
   if (state.is_discarded()) throw VaultError("vault contents are corrupt");
   return {std::move(v), std::move(state)};
