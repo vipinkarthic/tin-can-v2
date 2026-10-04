@@ -1,0 +1,17 @@
+{
+  "name": "tin-can-v2",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Tin Can v2: post-quantum secure chat. C++ crypto core, Node.js networking, web UI",
+  "type": "module",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "build:core": "cmake -S core -B core/build -G Ninja && cmake --build core/build",
+    "report": "python3 scripts/build-report.py docs/report/Tin_Can_v2_Project_Report.docx && python3 scripts/build-latex.py"
+  },
+  "dependencies": {
+    "ws": "^8.22.0"
+  }
+}
