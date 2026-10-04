@@ -335,7 +335,7 @@ void Client::receive_dm_request(const json& env, json& events, json& outgoing) {
   const Contact& from = contacts_.get(sender.user);
 
   // duplicate delivery or replay, ignore
-
+  if (seen_request(sender.user, str_field(env, "sid"))) return;
 
   if (auto it = sessions_.find(sender.user); it != sessions_.end()) {
     Session& existing = it->second;
