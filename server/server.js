@@ -89,7 +89,7 @@ export async function startServer({ host = '127.0.0.1', port = 7777, dbPath, cor
       if (op === 'register' || op === 'login') {
         const user = conn.pendingUser, nonce = conn.nonce;
         // single use challenge, wiped before the check so a failed try cant reuse it
-
+        conn.nonce = null;
         if (!user || !nonce) throw new ClientError('say hello first');
         const existing = store.getUser(user);
         if (op === 'login') {
