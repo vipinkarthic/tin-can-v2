@@ -103,7 +103,7 @@ export async function startServer({ host = '127.0.0.1', port = 7777, dbPath, cor
             throw new ClientError(`invalid bundle: ${e.message}`);
           }
           if (verified.user !== user) throw new ClientError('bundle is for a different username');
-          
+          if (existing && existing.sig_pk !== verified.sig_pk) throw new ClientError('username is already taken');
           await checkLogin(user, verified.sig_pk, nonce, msg.sig);
           if (!existing) store.addUser(user, verified.sig_pk, msg.bundle);
         }
