@@ -179,7 +179,7 @@ export async function startBridge({
   const tokenOk = (t) => typeof t === 'string' && t.length === token.length && timingSafeEqual(Buffer.from(t), Buffer.from(token));
 
   const http = createServer(async (req, res) => {
-    
+    if (!allowedHosts().has(req.headers.host)) { res.writeHead(421).end('wrong host'); return; }
     try {
       // keep this in the try, a bad path like percent zz makes decodeuricomponent throw, should 404 not crash
       const url = new URL(req.url, `http://${req.headers.host}`);
