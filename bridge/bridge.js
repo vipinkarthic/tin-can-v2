@@ -163,7 +163,7 @@ export async function startBridge({
     dm_request: async ({ to, text }) => {
       requireUnlocked();
       // always re fetch so a new chat picks up the latest key
-      await ensureContact(to);
+      await ensureContact(to, true);
       const r = await core.call('dm.request', { to, text: text ?? null });
       await sendOutgoing(r.outgoing);
       return r;
