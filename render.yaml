@@ -5,5 +5,5 @@ services:
     plan: free
     dockerfilePath: ./Dockerfile
     envVars:
-      - key: DB_PATH
-        value: /data/pqs-server.db
+      - key: DATA_DIR
+        value: /data

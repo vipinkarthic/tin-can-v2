@@ -25,7 +25,11 @@ export class Bridge {
   static connect(token) {
     return new Promise((resolve, reject) => {
       const b = new Bridge();
-      const ws = new WebSocket(`ws://${location.host}/ws?token=${encodeURIComponent(token ?? '')}`);
+      // relative to the page so it also works behind the hosted gateway, wss when the page is https
+      const target = new URL('ws', location.href);
+      target.protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+      target.search = `?token=${encodeURIComponent(token ?? '')}`;
+      const ws = new WebSocket(target);
       b.#ws = ws;
       let opened = false;
       ws.addEventListener('open', () => { opened = true; resolve(b); });

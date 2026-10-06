@@ -1,4 +1,4 @@
-# relay only, bridges stay on each users machine and point at this with --server wss://<host>
+# hosted demo: landing page + server side bridges + relay on one port, local bridges can still use --server wss://<host>
 
 FROM node:22-trixie-slim AS core
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -16,8 +16,10 @@ COPY package.json package-lock.json ./
 RUN npm ci --omit=dev
 COPY bridge ./bridge
 COPY server ./server
+COPY web ./web
+COPY hosted ./hosted
 COPY --from=core /src/core/build/pqs-core ./core/build/pqs-core
-ENV PORT=10000 DB_PATH=/data/pqs-server.db
+ENV PORT=10000 DATA_DIR=/data
 RUN mkdir -p /data
 EXPOSE 10000
-CMD ["sh", "-c", "exec node server/index.js --host 0.0.0.0 --port \"$PORT\" --db \"$DB_PATH\""]
+CMD ["node", "hosted/gateway.js"]
