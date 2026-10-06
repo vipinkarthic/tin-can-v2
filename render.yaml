@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: tin-can-relay
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: DB_PATH
+        value: /data/pqs-server.db
